@@ -2,14 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Art Inventory Management</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- DataTables CSS -->
-    <link href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/webjars/github-com-twbs-bootstrap-/5.3.8/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" th:href="@{/webjars/datatables/2.3.7/css/dataTables.bootstrap5.min.css}"/>
 </head>
 <body class="container mt-5">
 
 <h2>Available Art Inventory</h2>
+<a th:href="@{/inventory/add}" class="btn btn-primary mb-3">Add New Art</a>
 <hr>
 
 <table id="inventoryTable" class="table table-striped table-bordered">
@@ -26,23 +25,25 @@
     </thead>
     <tbody>
     <tr th:each="art : ${artPieces}">
-        <td th:text="${art.id}">1234567890</td>
-        <td th:text="${art.title}">Family on the Beach</td>
-        <td th:text="${art.authorName}">John Doe</td>
-        <td th:text="${art.getClass().getSimpleName()}">Painting</td>
-        <td th:text="${art.yearCreated}">2021</td>
-        <td th:text="${'$' + art.price}">$500.00</td>
+        <td th:text="${art.id}"></td>
+        <td th:text="${art.title}"></td>
+        <td th:text="${art.authorName}"></td>
+        <td th:text="${art.getClass().getSimpleName()}"></td>
+        <td th:text="${art.yearCreated}"></td>
+        <td th:text="${'$' + art.price}"></td>
         <td>
-            <button class="btn btn-sm btn-danger">Remove</button>
+            <a th:href="@{/inventory/{id}(id=${art.id})}" class="btn btn-sm btn-info">View</a>
+            <a th:href="@{/inventory/edit/{id}(id=${art.id})}" class="btn btn-sm btn-warning">Edit</a>
+            <a th:href="@{/inventory/delete/{id}(id=${art.id})}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?');">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
 
-<!-- jQuery and DataTables JS -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+<script type="text/javascript" th:src="@{/webjars/jquery/4.0.0/dist/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/github-com-twbs-bootstrap-/5.3.8/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/datatables/2.3.7/js/dataTables.min.js}"></script>
+<script type="text/javascript" th:src="@{/webjars/datatables/2.3.7/js/dataTables.bootstrap5.min.js}"></script>
 <script>
     $(document).ready(function() {
         $('#inventoryTable').DataTable({

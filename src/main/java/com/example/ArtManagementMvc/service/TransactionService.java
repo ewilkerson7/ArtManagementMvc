@@ -5,6 +5,7 @@ import com.example.ArtManagementMvc.repository.*;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TransactionService {
@@ -15,6 +16,22 @@ public class TransactionService {
     public TransactionService(TransactionRepository transactionRepo, ArtRepository artRepo) {
         this.transactionRepo = transactionRepo;
         this.artRepo = artRepo;
+    }
+
+    public List<Transaction> findAllTransactions() {
+        return transactionRepo.findAll();
+    }
+
+    public Optional<Transaction> findTransactionById(String id) {
+        return transactionRepo.findById(id);
+    }
+
+    public Transaction saveTransaction(Transaction transaction) {
+        return transactionRepo.save(transaction);
+    }
+
+    public void deleteTransaction(String id) {
+        transactionRepo.deleteById(id);
     }
 
     public double calculateTransactionPrice(Transaction transaction) {

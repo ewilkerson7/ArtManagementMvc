@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Art</title>
+    <link rel="stylesheet" th:href="@{/webjars/github-com-twbs-bootstrap-/5.3.8/css/bootstrap.min.css}"/>
+</head>
+<body class="container mt-5">
+<h2>Add New Art</h2>
+<hr>
+<form th:action="@{/inventory/add}" th:object="${art}" method="post">
+    <div class="mb-3">
+        <label class="form-label">ID</label>
+        <input type="text" class="form-control" th:field="*{id}" required maxlength="10">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" th:field="*{title}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Author Name</label>
+        <input type="text" class="form-control" th:field="*{authorName}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Year Created</label>
+        <input type="number" class="form-control" th:field="*{yearCreated}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Price ($)</label>
+        <input type="number" step="0.01" class="form-control" th:field="*{price}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" th:field="*{description}"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Save Art</button>
+    <a th:href="@{/inventory}" class="btn btn-secondary">Cancel</a>
+</form>
+</body>
+</html>
