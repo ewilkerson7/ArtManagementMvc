@@ -10,31 +10,151 @@
 <form th:action="@{/inventory/edit/{id}(id=${art.id})}" th:object="${art}" method="post">
   <!-- Prevent user from changing the core ID, make it readonly -->
   <div class="mb-3">
-    <label class="form-label">ID</label>
-    <input type="text" class="form-control" th:field="*{id}" readonly>
+    <label for="id" class="form-label">ID</label>
+    <input id="id" type="text" class="form-control" th:field="*{id}" readonly>
+    <span class="error" th:if="${#fields.hasErrors('id')}"
+          th:errors="*{id}">Error</span>
+
   </div>
   <div class="mb-3">
-    <label class="form-label">Title</label>
-    <input type="text" class="form-control" th:field="*{title}" required>
+    <label for="artType" class="form-label">Type:</label>
+    <select class="form-select" id="artType" th:field="*{artType}" disabled>
+      <option th:value="'PAINTING'" th:text="PAINTING"></option>
+      <option th:value="'DRAWING'" th:text="DRAWING"></option>
+      <option th:value="'PRINT'" th:text="PRINT"></option>
+      <option th:value="'SCULPTURE'" th:text="SCULPTURE"></option>
+    </select>
+    <input type="hidden" th:field="*{artType}" />
+  </div>
+
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input id="title" type="text" class="form-control" th:field="*{title}" required>
+    <span class="error" th:if="${#fields.hasErrors('title')}"
+          th:errors="*{title}">Error</span>
   </div>
   <div class="mb-3">
-    <label class="form-label">Author Name</label>
-    <input type="text" class="form-control" th:field="*{authorName}">
+    <label for="authorName" class="form-label">Author Name</label>
+    <input id="authorName" type="text" class="form-control" th:field="*{authorName}">
+    <span class="error" th:if="${#fields.hasErrors('authorName')}"
+          th:errors="*{authorName}">Error</span>
+
   </div>
   <div class="mb-3">
-    <label class="form-label">Year Created</label>
-    <input type="number" class="form-control" th:field="*{yearCreated}">
+    <label for="yearCreated" class="form-label">Year Created</label>
+    <input id="yearCreated" type="number" class="form-control" th:field="*{yearCreated}">
+    <span class="error" th:if="${#fields.hasErrors('yearCreated')}"
+          th:errors="*{yearCreated}">Error</span>
+
   </div>
   <div class="mb-3">
-    <label class="form-label">Price ($)</label>
-    <input type="number" step="0.01" class="form-control" th:field="*{price}">
+    <label for="price" class="form-label">Price ($)</label>
+    <input id="price" type="number" step="0.01" class="form-control" th:field="*{price}">
+    <span class="error" th:if="${#fields.hasErrors('price')}"
+          th:errors="*{price}">Error</span>
+
   </div>
   <div class="mb-3">
-    <label class="form-label">Description</label>
-    <textarea class="form-control" th:field="*{description}"></textarea>
+    <label for="description" class="form-label">Description</label>
+    <textarea id="description" class="form-control" th:field="*{description}"></textarea>
+    <span class="error" th:if="${#fields.hasErrors('description')}"
+          th:errors="*{description}">Error</span>
+
   </div>
+  <div class="mb-3" id="paintingFields">
+    <div class="mb-3">
+      <label for="heightInches" class="form-label">Height Inches</label>
+      <input id="heightInches" type="number" step="0.01" class="form-control" th:field="*{heightInches}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="widthInches" class="form-label">Width Inches</label>
+      <input id="widthInches" type="number" step="0.01" class="form-control" th:field="*{widthInches}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="style" class="form-label">Style</label>
+      <input id="style" type="text" class="form-control" th:field="*{style}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="technique" class="form-label">Technique</label>
+      <input id="technique" type="text" class="form-control" th:field="*{technique}" required>
+    </div>
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <input id="category" type="text" class="form-control" th:field="*{category}" required>
+    </div>
+
+  </div>
+  <div class="mb-3" id="drawingFields">
+    <div class="mb-3">
+      <label for="style2" class="form-label">Style</label>
+      <input id="style2" type="text" class="form-control" th:field="*{style}" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="technique2" class="form-label">Technique</label>
+      <input id="technique2" type="text" class="form-control" th:field="*{technique}" required>
+    </div>
+    <div class="mb-3">
+      <label for="category2" class="form-label">Category</label>
+      <input id="category2" type="text" class="form-control" th:field="*{category}" required>
+    </div>
+
+  </div>
+  <div class="mb-3" id="printFields">
+    <div class="mb-3">
+      <label for="openEditionType" class="form-label">Open Edition Type</label>
+      <input id="openEditionType" type="text" class="form-control" th:field="*{openEditionType}" required>
+    </div>
+    <div class="mb-3">
+      <label for="category3" class="form-label">Category</label>
+      <input id="category3" type="text" class="form-control" th:field="*{category}" required>
+    </div>
+
+  </div>
+  <div class="mb-3" id="sculptureFields">
+    <div class="mb-3">
+      <label for="material" class="form-label">Material</label>
+      <input id="material" type="text" class="form-control" th:field="*{material}" required>
+    </div>
+    <div class="mb-3">
+      <label for="weightOunces" class="form-label">Weight Ounces</label>
+      <input id="weightOunces" type="number" step="0.01" class="form-control" th:field="*{weightOunces}" required>
+    </div>
+
+  </div>
+
   <button type="submit" class="btn btn-primary">Update Art</button>
   <a th:href="@{/inventory}" class="btn btn-secondary">Cancel</a>
 </form>
+
+<script>
+  const typeSelect = document.getElementById('artType');
+  const paintingFields = document.getElementById('paintingFields');
+  const drawingFields = document.getElementById('drawingFields');
+  const printFields = document.getElementById('printFields');
+  const sculptureFields = document.getElementById('sculptureFields');
+
+  function toggleFields() {
+    const type = typeSelect.value;
+
+    const toggleSection = (element, isVisible) => {
+      element.classList.toggle('d-none', !isVisible);
+      element.querySelectorAll('input, select, textarea').forEach(input => {
+        input.disabled = !isVisible;
+      });
+    };
+
+    toggleSection(paintingFields, type === 'PAINTING');
+    toggleSection(drawingFields, type === 'DRAWING');
+    toggleSection(printFields, type === 'PRINT');
+    toggleSection(sculptureFields, type === 'SCULPTURE');
+  }
+
+  typeSelect.addEventListener('change', toggleFields);
+  toggleFields(); // Run once on page load
+</script>
 </body>
 </html>
