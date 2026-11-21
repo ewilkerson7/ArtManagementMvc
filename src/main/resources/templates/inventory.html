@@ -15,9 +15,9 @@
     <thead class="table-dark">
     <tr>
         <th>ID</th>
+        <th>Type</th>
         <th>Title</th>
         <th>Author</th>
-        <th>Type</th>
         <th>Year</th>
         <th>Price</th>
         <th>Actions</th>
@@ -26,9 +26,9 @@
     <tbody>
     <tr th:each="art : ${artPieces}">
         <td th:text="${art.id}"></td>
+        <td th:text="${art.artType}"></td>
         <td th:text="${art.title}"></td>
         <td th:text="${art.authorName}"></td>
-        <td th:text="${art.getClass().getSimpleName()}"></td>
         <td th:text="${art.yearCreated}"></td>
         <td th:text="${'$' + art.price}"></td>
         <td>

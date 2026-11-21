@@ -28,9 +28,38 @@ public class ArtController {
     // READ: View details of a specific art piece
     @GetMapping("/{id}")
     public String viewArtDetail(@PathVariable String id, Model model) {
-        Art art = artRepository.findById(id)
+        Art existing = artRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid art ID: " + id));
-        model.addAttribute("art", art);
+
+        ArtForm form = new ArtForm();
+
+        form.setId(existing.getId());
+        form.setArtType(existing.getArtType());
+        form.setTitle(existing.getTitle());
+        form.setAuthorName(existing.getAuthorName());
+        form.setYearCreated(existing.getYearCreated());
+        form.setPrice(existing.getPrice());
+        form.setDescription(existing.getDescription());
+
+        if (existing instanceof Painting painting) {
+            form.setHeightInches(painting.getHeightInches());
+            form.setWidthInches(painting.getWidthInches());
+            form.setStyle(painting.getStyle());
+            form.setTechnique(painting.getTechnique());
+            form.setCategory(painting.getCategory());
+        } else if (existing instanceof Drawing drawing) {
+            form.setStyle(drawing.getStyle());
+            form.setTechnique(drawing.getTechnique());
+            form.setCategory(drawing.getCategory());
+        } else if (existing instanceof Print print) {
+            form.setOpenEditionType(print.getOpenEditionType());
+            form.setCategory(print.getCategory());
+        }else if (existing instanceof Sculpture sculpture) {
+            form.setMaterial(sculpture.getMaterial());
+            form.setWeightOunces(sculpture.getWeightOunces());
+        }
+
+        model.addAttribute("art", form);
         return "inventoryDetail";
     }
 
@@ -85,7 +114,7 @@ public class ArtController {
 
         // Copy common Art fields
         art.setId("ART" + form.getId().substring(3));
-        art.setArtType(form.getArtType());
+        art.setArtType(type);
         art.setTitle(form.getTitle());
         art.setAuthorName(form.getAuthorName());
         art.setYearCreated(form.getYearCreated());

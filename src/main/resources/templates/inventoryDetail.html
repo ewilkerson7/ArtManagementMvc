@@ -12,13 +12,62 @@
         <h5 class="card-title" th:text="${art.title}">Title</h5>
         <h6 class="card-subtitle mb-2 text-muted" th:text="${art.authorName}">Author</h6>
         <p class="card-text"><strong>ID:</strong> <span th:text="${art.id}"></span></p>
-        <p class="card-text"><strong>Type:</strong> <span th:text="${art.getClass().getSimpleName()}"></span></p>
+        <input type="hidden" th:field="*{art.artType}" />
+        <p class="card-text"><strong>Type:</strong> <span th:text="${art.artType}"></span></p>
         <p class="card-text"><strong>Year:</strong> <span th:text="${art.yearCreated}"></span></p>
         <p class="card-text"><strong>Price:</strong> $<span th:text="${art.price}"></span></p>
         <p class="card-text"><strong>Description:</strong> <span th:text="${art.description}"></span></p>
+        <div class="mb-3" id="paintingFields">
+        <p class="card-text"><strong>Height Inches:</strong> <span th:text="${art.heightInches}"></span></p>
+        <p class="card-text"><strong>Width Inches:</strong> <span th:text="${art.widthInches}"></span></p>
+        <p class="card-text"><strong>Style:</strong> <span th:text="${art.style}"></span></p>
+        <p class="card-text"><strong>Technique:</strong> <span th:text="${art.technique}"></span></p>
+        <p class="card-text"><strong>Category:</strong> <span th:text="${art.category}"></span></p>
+        </div>
+        <div class="mb-3" id="drawingFields">
+            <p class="card-text"><strong>Style:</strong> <span th:text="${art.style}"></span></p>
+            <p class="card-text"><strong>Technique:</strong> <span th:text="${art.technique}"></span></p>
+            <p class="card-text"><strong>Category:</strong> <span th:text="${art.category}"></span></p>
+        </div>
+        <div class="mb-3" id="printFields">
+            <p class="card-text"><strong>Open Edition Type:</strong> <span th:text="${art.openEditionType}"></span></p>
+            <p class="card-text"><strong>Category:</strong> <span th:text="${art.category}"></span></p>
+        </div>
+        <div class="mb-3" id="sculptureFields">
+            <p class="card-text"><strong>Material:</strong> <span th:text="${art.material}"></span></p>
+            <p class="card-text"><strong>Weight Ounces:</strong> <span th:text="${art.weightOunces}"></span></p>
+        </div>
+
+
     </div>
 </div>
 <br>
 <a th:href="@{/inventory}" class="btn btn-secondary">Back to Inventory</a>
+<script>
+    const typeSelect = document.getElementById('artType');
+    const paintingFields = document.getElementById('paintingFields');
+    const drawingFields = document.getElementById('drawingFields');
+    const printFields = document.getElementById('printFields');
+    const sculptureFields = document.getElementById('sculptureFields');
+
+    function toggleFields() {
+        const type = typeSelect.value;
+
+        const toggleSection = (element, isVisible) => {
+            element.classList.toggle('d-none', !isVisible);
+            element.querySelectorAll('input, select, textarea').forEach(input => {
+                input.disabled = !isVisible;
+            });
+        };
+
+        toggleSection(paintingFields, type === 'PAINTING');
+        toggleSection(drawingFields, type === 'DRAWING');
+        toggleSection(printFields, type === 'PRINT');
+        toggleSection(sculptureFields, type === 'SCULPTURE');
+    }
+
+    typeSelect.addEventListener('change', toggleFields);
+    toggleFields(); // Run once on page load
+</script>
 </body>
 </html>
